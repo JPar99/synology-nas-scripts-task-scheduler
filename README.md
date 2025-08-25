@@ -12,8 +12,10 @@ Controls the start, stop, and restart of the Immich stack containers in a safe, 
 Master control script for starting, stopping, or restarting a suite of Docker containers (Immich, IT-TOOLS, Glances, homepage, Portainer, and more). Ensures proper order, handles dependencies, and provides runtime and status output.
 - See: `containers_startstop_sequence.md` for full documentation.
 
-### 3. `backup_config_dss.sh`
-(Description not yet documented.)
+
+### 3. `backup_config_dsm_dss.sh`
+Automates the backup of Synology DSM system configuration to a `.dss` file and manages retention by deleting old backups. Includes detailed logging, retention management, and a runtime summary. Designed for use with Synology Task Scheduler.
+- See: `backup_config_dss.md` for full documentation.
 
 ## Usage
 - Place these scripts on your Synology NAS.

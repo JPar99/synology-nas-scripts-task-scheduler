@@ -8,7 +8,7 @@ DOCKER_BIN="$(command -v docker)"
 [ -x "$API" ]        || { echo "❌ synowebapi not found – abort."; exit 1; }
 [ -x "$DOCKER_BIN" ] || { echo "❌ docker CLI not found – abort."; exit 1; }
 
-# ── Containers ───────────────────────────────────────────────────────────────
+# ── Containers ────────────────────────────────────────────────────────────[...]
 PORTAINER="portainer"
 HOMEPAGE="homepage"
 ITTOOLS="IT-TOOLS"
@@ -135,7 +135,7 @@ ensure_running() {
   done
 }
 
-# ── Immich helpers ───────────────────────────────────────────────────────────
+# ── Immich helpers ──────────────────────────────────────────────────────────��[...]
 immich_stop() {
   echo " [$(ts)]   • Stopping Immich stack"
   echo -n "   • $IMMICH_SERVER… "; api_call stop "$IMMICH_SERVER"; wait_short
@@ -191,45 +191,21 @@ start_all() {
   stt_start
 }
 
-# ── Estimate total sleep time for start/stop ──────────────────────────────────
-estimate_stop_time() {
-  # Immich: 10+10+15+10 = 45
-  # STT: 15+15 = 30
-  # ITTOOLS, MINIQR, WUD, CFCF, HOMEPAGE: 5*5 = 25
-  # PORTAINER: 15
-  # DOZZLE: 10
-  echo $((45 + 30 + 25 + 15 + 10))
-}
-estimate_start_time() {
-  # DOZZLE: 30
-  # PORTAINER: 15
-  # HOMEPAGE: 10
-  # CFCF, ITTOOLS, MINIQR: 3*5 = 15
-  # WUD: 10
-  # Immich: 15+10+10+10 = 45
-  # STT: 15+15 = 30
-  echo $((30 + 15 + 10 + 15 + 10 + 45 + 30))
-}
-
-# ── Driver ───────────────────────────────────────────────────────────────────
+# ── Driver ─────────────────────────────────────────────────────────────�[...]
 ACTION="${1:-restart}"
 case "$ACTION" in
   stop)
     echo " [$(ts)] Stop sequence initiated sir"
-    echo "⏳ Estimated stop sleep time: $(estimate_stop_time) seconds"
     stop_all
     ensure_stopped "${ALL_CONTAINERS[@]}"
     ;;
   start)
     echo "▶️  [$(ts)] Start sequence initiated sir"
-    echo "⏳ Estimated start sleep time: $(estimate_start_time) seconds"
     start_all
     ensure_running "${ALL_CONTAINERS[@]}"
     ;;
   restart)
     echo " [$(ts)] Restart sequence initiated sir"
-    echo "⏳ Estimated stop sleep time: $(estimate_stop_time) seconds"
-    echo "⏳ Estimated start sleep time: $(estimate_start_time) seconds"
     stop_all
     ensure_stopped "${ALL_CONTAINERS[@]}"
     start_all
